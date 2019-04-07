@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "626541893391",
+    "firebase_url": "https://group-wallet-236919.firebaseio.com",
+    "project_id": "group-wallet-236919",
+    "storage_bucket": "group-wallet-236919.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626541893391:android:1ad70277b9177bc0",
+        "android_client_info": {
+          "package_name": "com.example.groupwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626541893391-mcivq2o5p2kfugo2f4m5ji62os70a6qb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.groupwallet",
+            "certificate_hash": "350e2b7e8f8f6ed842beed174c1f147211752a55"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYjNfX5FYhpCMkDQpRQMSI_gIYzWvQALA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626541893391-suk9bm2ae3hu1qm4fb2qr3goudaugc2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

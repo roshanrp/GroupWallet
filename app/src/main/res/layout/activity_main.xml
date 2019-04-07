@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noGroups"
+        android:text="No groups found. Create new group."
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -20,5 +32,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:clickable="true"
-        android:onClick="addGroup"/>
+        android:onClick="addGroup"
+        android:src="@mipmap/ic_launcher_round"/>
 </RelativeLayout>

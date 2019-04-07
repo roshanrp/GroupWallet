@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:id="@+id/parent_layout">
 
     <TextView
@@ -17,6 +19,16 @@
         android:layout_height="wrap_content"
         android:id="@+id/groupDescription"
         android:text="Group Description"
-        android:layout_below="@+id/groupName"/>
+        android:layout_below="@+id/groupName"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/groupDescription"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="5dp"
+        android:outlineSpotShadowColor="@color/colorPrimaryDark"/>
 
 </RelativeLayout>
