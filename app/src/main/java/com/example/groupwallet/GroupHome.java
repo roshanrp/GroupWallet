@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,14 +26,15 @@ public class GroupHome extends AppCompatActivity {
     TransactionList adapter;
     List<Transaction> transactionList;
     DatabaseReference databaseTransaction;
+    String gId;
+    private static final String TAG = "GroupHome";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_home);
 
-        String str = getIntent().getStringExtra("GROUP_ID");
-        Toast.makeText(this, str, Toast.LENGTH_LONG).show();
+        gId = getIntent().getStringExtra("GROUP_ID");
 
         transactionList = new ArrayList<>();
         initRecyclerView();
@@ -47,15 +49,23 @@ public class GroupHome extends AppCompatActivity {
         databaseTransaction.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 transactionList.clear();
                 for(DataSnapshot transactionSnapshot : dataSnapshot.getChildren()) {
                     Transaction transaction = transactionSnapshot.getValue(Transaction.class);
-                    transactionList.add(transaction);
+                    if (transaction.getGroupId().equals(gId)) {
+                        transactionList.add(transaction);
+                    }
                 }
+
+                Log.d(TAG, "onDataChange: TLSize: " + transactionList.size());
 
                 if (transactionList.size() == 0) {
                     TextView noTrans = GroupHome.this.findViewById(R.id.noTrans);
                     noTrans.setVisibility(View.VISIBLE);
+                } else {
+                    TextView noTrans = GroupHome.this.findViewById(R.id.noTrans);
+                    noTrans.setVisibility(View.GONE);
                 }
 
                 TransactionList adapter = new TransactionList(GroupHome.this, transactionList);
@@ -74,13 +84,23 @@ public class GroupHome extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         adapter = new TransactionList(this, transactionList);
         recyclerView.setAdapter(adapter);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
     public void addTransaction(View view) {
         Intent intent = new Intent(this, AddTransaction.class);
+        intent.putExtra("GROUP_ID", gId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

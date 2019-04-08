@@ -12,12 +12,18 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class AddTransaction extends AppCompatActivity {
 
     EditText transName;
     EditText paidBy;
     EditText transAmount;
     Button submit;
+    String gId;
+    String date;
 
     DatabaseReference databaseTransaction;
 
@@ -26,7 +32,9 @@ public class AddTransaction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
 
-        databaseTransaction = FirebaseDatabase.getInstance().getReference("transactions");
+        gId = getIntent().getStringExtra("GROUP_ID");
+
+        databaseTransaction = FirebaseDatabase.getInstance().getReference().child("transactions");
         transName = (EditText) findViewById(R.id.editTextTransName);
         paidBy = (EditText) findViewById(R.id.editTextPaidBy);
         transAmount = (EditText) findViewById(R.id.editTextTransAmount);
@@ -41,7 +49,6 @@ public class AddTransaction extends AppCompatActivity {
     }
 
     public void submit() {
-        Toast.makeText(this, "Submit Clicked", Toast.LENGTH_LONG).show();
         String tName = transName.getText().toString().trim();
         String tPayer = paidBy.getText().toString().trim();
         String amount = transAmount.getText().toString().trim();
@@ -49,16 +56,18 @@ public class AddTransaction extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(tName) && !TextUtils.isEmpty(tPayer) && !TextUtils.isEmpty(amount)) {
             //TODO: Add to Firebase
-            String gId = databaseTransaction.push().getKey();
-            String tId = databaseTransaction.child(gId).push().getKey();
-            Transaction transaction = new Transaction(gId, tId, tName, tPayer, tAmount);
-            databaseTransaction.child(gId).setValue(transaction);
+//            String gId = databaseTransaction.push().getKey();
+            String tId = databaseTransaction.push().getKey();
+            date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            Transaction transaction = new Transaction(tId, gId, tName, tPayer, tAmount, date);
+            databaseTransaction.child(tId).setValue(transaction);
+
+            Intent intent = new Intent(this, GroupHome.class);
+            intent.putExtra("GROUP_ID", gId);
+            startActivity(intent);
 
         } else {
             Toast.makeText(this, "Enter all fields", Toast.LENGTH_LONG).show();
         }
-        Intent intent = new Intent(this, GroupHome.class);
-        startActivity(intent);
-
     }
 }

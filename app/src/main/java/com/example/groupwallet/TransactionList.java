@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TransactionList extends RecyclerView.Adapter<TransactionList.TransactionViewHolder> {
 
@@ -36,10 +39,10 @@ public class TransactionList extends RecyclerView.Adapter<TransactionList.Transa
 
         Transaction transaction = transactionList.get(i);
         transactionViewHolder.transName.setText(transaction.getTransName());
-        transactionViewHolder.paidBy.setText(transaction.getPaidBy());
+        transactionViewHolder.paidBy.setText("Paid By: " + transaction.getPaidBy());
         transactionViewHolder.amount.setText(transaction.getAmount().toString());
-
-        //TODO: Add on CLick.
+        transactionViewHolder.date.setText(transaction.getDate());
+        //TODO: Add on CLick (Secondary).
 
 
     }
@@ -54,7 +57,7 @@ public class TransactionList extends RecyclerView.Adapter<TransactionList.Transa
         TextView transName;
         TextView paidBy;
         TextView amount;
-
+        TextView date;
 
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,7 +65,7 @@ public class TransactionList extends RecyclerView.Adapter<TransactionList.Transa
             transName = (TextView) itemView.findViewById(R.id.transName);
             paidBy = (TextView) itemView.findViewById(R.id.paidBy);
             amount = (TextView) itemView.findViewById(R.id.transAmount);
-
+            date = (TextView) itemView.findViewById(R.id.date);
         }
     }
 }
