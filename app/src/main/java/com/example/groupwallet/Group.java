@@ -1,32 +1,25 @@
 package com.example.groupwallet;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Group implements Serializable {
 
     String groupId;
     String groupName;
     String groupDesc;
-//    String[] members;
-
-    //TODO: Add members to group and uncomment constructor and getter
+    List<Participant> members;
 
     public Group() {
 
     }
 
-    public Group(String groupId, String groupName, String groupDesc) {
+    public Group(String groupId, String groupName, String groupDesc, List<Participant> members) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupDesc = groupDesc;
+        this.members = members;
     }
-
-//    public Group(String groupId, String groupName, String groupDesc, String[] members) {
-//        this.groupId = groupId;
-//        this.groupName = groupName;
-//        this.groupDesc = groupDesc;
-//        this.members = members;
-//    }
 
     public String getGroupId() {
         return groupId;
@@ -40,7 +33,8 @@ public class Group implements Serializable {
         return groupDesc;
     }
 
-//    public String[] getMembers() {
-//        return members;
-//    }
+    public List<Participant> getMembers() {
+        return members;
+    }
+
 }
