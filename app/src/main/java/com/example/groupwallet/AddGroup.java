@@ -24,8 +24,6 @@ public class AddGroup extends AppCompatActivity {
 
     String name;
     String desc;
-    //String[] members;
-    Collection<Participant> members;
 
     EditText groupName;
     EditText groupDesc;
@@ -39,8 +37,7 @@ public class AddGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
 
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        databaseGroup = FirebaseDatabase.getInstance().getReference("groups");
+        databaseGroup = FirebaseDatabase.getInstance().getReference().child("groups");
 
         groupName = (EditText) findViewById(R.id.editTextGroupName);
         groupDesc = (EditText) findViewById(R.id.editTextGroupDescription);
@@ -88,17 +85,16 @@ public class AddGroup extends AppCompatActivity {
                 members.add(new Participant(gId, pId, member));
             }
 
-//            Group group = new Group(id, gName, gDesc, membersArray[0]);
-
             Group group = new Group(gId, gName, gDesc, members);
             databaseGroup.child(gId).setValue(group);
 
             Toast.makeText(this, "Group created", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
 
         } else {
             Toast.makeText(this, "Enter all fields", Toast.LENGTH_LONG).show();
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+
     }
 }

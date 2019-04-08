@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".GroupHome">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/noGroups"
-        android:text="No groups found. Create new group."
+        android:id="@+id/noTrans"
+        android:text="No transactions found. Create new transaction."
         android:layout_alignParentTop="true"
         android:visibility="gone"
         android:gravity="center_horizontal"
@@ -31,6 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:clickable="true"
-        android:onClick="addGroup"
+        android:onClick="addTransaction"
         android:src="@mipmap/ic_launcher_round"/>
+
 </RelativeLayout>

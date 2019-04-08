@@ -44,9 +44,8 @@ public class GroupList extends RecyclerView.Adapter<GroupList.GroupViewHolder> {
         groupViewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Set on click listener
                 Log.d(TAG, "onClick: clicked on:" + group);
-                Intent intent = new Intent(context, TransactionList.class);
+                Intent intent = new Intent(context, GroupHome.class);
                 intent.putExtra("GROUP_ID", group.getGroupId());
                 intent.putExtra("GROUP_NAME", group.getGroupName());
                 intent.putExtra("GROUP_DESC", group.getGroupDesc());
@@ -62,7 +61,7 @@ public class GroupList extends RecyclerView.Adapter<GroupList.GroupViewHolder> {
     }
 
     //RecyclerView.ViewHolder
-    class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class GroupViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout relativeLayout;
         TextView groupName;
@@ -73,14 +72,6 @@ public class GroupList extends RecyclerView.Adapter<GroupList.GroupViewHolder> {
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.parent_layout);
             groupName = (TextView) itemView.findViewById(R.id.groupName);
             groupDesc = (TextView) itemView.findViewById(R.id.groupDescription);
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            Group group = groupList.get(getAdapterPosition());
-            Log.d(TAG, "onClick: Clicked on" + group);
-
         }
     }
 }
