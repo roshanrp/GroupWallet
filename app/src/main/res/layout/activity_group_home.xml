@@ -34,4 +34,27 @@
         android:onClick="addTransaction"
         android:src="@mipmap/ic_launcher_round"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:clickable="true"
+        android:onClick="resolve" />
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/split"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_margin="30dp"-->
+        <!--android:text="Resolve"-->
+        <!--android:clickable="true"-->
+        <!--android:textColor="#FFF"-->
+        <!--android:background="@color/colorAccent"/>-->
+
+
 </RelativeLayout>

@@ -76,13 +76,12 @@ public class AddGroup extends AppCompatActivity {
 
 //        if (!TextUtils.isEmpty(gName) && !TextUtils.isEmpty(gDesc) && members.length != 0) {
         if (!TextUtils.isEmpty(gName) && !TextUtils.isEmpty(gDesc) && membersArray.length != 0) {
-            //TODO: Add to firebase
 
             String gId = databaseGroup.push().getKey();
             String pId = databaseGroup.child(gId).push().getKey();
 
             for (String member : membersArray) {
-                members.add(new Participant(gId, pId, member));
+                members.add(new Participant(gId, pId, member, 0.0, 0.0));
             }
 
             Group group = new Group(gId, gName, gDesc, members);

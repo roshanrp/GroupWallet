@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class GroupHome extends AppCompatActivity {
     TransactionList adapter;
     List<Transaction> transactionList;
     DatabaseReference databaseTransaction;
+    Button resolve;
     String gId;
     private static final String TAG = "GroupHome";
 
@@ -38,6 +40,17 @@ public class GroupHome extends AppCompatActivity {
 
         transactionList = new ArrayList<>();
         initRecyclerView();
+
+//        resolve = (Button) findViewById(R.id.split);
+//        resolve.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Toast.makeText(GroupHome.this, "Resolve", Toast.LENGTH_LONG).show();
+//                List<Participant> groupMembers = getMembers();
+//                Log.d(TAG, "resolve: members fetched");
+//            }
+//        });
 
     }
 
@@ -57,8 +70,6 @@ public class GroupHome extends AppCompatActivity {
                         transactionList.add(transaction);
                     }
                 }
-
-                Log.d(TAG, "onDataChange: TLSize: " + transactionList.size());
 
                 if (transactionList.size() == 0) {
                     TextView noTrans = GroupHome.this.findViewById(R.id.noTrans);
@@ -102,5 +113,40 @@ public class GroupHome extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
+    }
+
+
+    public void resolve(View view) {
+
+        List<Participant> groupMembers = getMembers();
+        
+
+
+    }
+
+    public List<Participant> getMembers() {
+        final List<Participant> membersList = new ArrayList<>();
+        databaseTransaction = FirebaseDatabase.getInstance().getReference().child("groups");
+        DatabaseReference memberRef = databaseTransaction.child(gId).child("members");
+
+
+        memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot memberSnapshot : dataSnapshot.getChildren()) {
+                    Participant member = memberSnapshot.getValue(Participant.class);
+                    membersList.add(member);
+                    Toast.makeText(GroupHome.this, "Member List: " + member.getMemberName(), Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "onDataChange: Member List" + member.getMemberName());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return membersList;
     }
 }
