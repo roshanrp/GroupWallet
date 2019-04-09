@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class GroupHome extends AppCompatActivity {
     TransactionList adapter;
     List<Transaction> transactionList;
     DatabaseReference databaseTransaction;
+    List<Participant> membersList;
     Button resolve;
     String gId;
     private static final String TAG = "GroupHome";
@@ -119,15 +121,25 @@ public class GroupHome extends AppCompatActivity {
     public void resolve(View view) {
 
         List<Participant> groupMembers = getMembers();
-        
-
+//        Log.d(TAG, "resolve: size  " + groupMembers.size());
+//        double payment;
+//        String resolveText = new String("Hello ");
+//        for (Participant p : groupMembers) {
+//            Log.d(TAG, "resolve: inLoop");
+//            payment = p.getAmountPaid() - p.getShare();
+//            //resolveText = resolveText + p.getMemberName() + " owes " + Double.toString(payment) + " ";
+//            String Name = p.getMemberName();
+//            resolveText = resolveText + Name;
+//        }
+//        Log.d(TAG, "resolve: Resolve Text" + resolveText);
 
     }
 
     public List<Participant> getMembers() {
-        final List<Participant> membersList = new ArrayList<>();
+         membersList = new ArrayList<>();
         databaseTransaction = FirebaseDatabase.getInstance().getReference().child("groups");
         DatabaseReference memberRef = databaseTransaction.child(gId).child("members");
+        Log.d(TAG, "onDataChange: listgg " + membersList.size());
 
 
         memberRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -135,10 +147,28 @@ public class GroupHome extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot memberSnapshot : dataSnapshot.getChildren()) {
                     Participant member = memberSnapshot.getValue(Participant.class);
+                    Log.d(TAG, "onDataChange: Name" + member.getMemberName());
                     membersList.add(member);
-                    Toast.makeText(GroupHome.this, "Member List: " + member.getMemberName(), Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "onDataChange: Member List" + member.getMemberName());
+                    Log.d(TAG, "onDataChange: list " + membersList.size());
                 }
+
+                DecimalFormat precision = new DecimalFormat("0.00");
+                double payment;
+                String resolveText = "";
+                for (Participant p : membersList) {
+                    payment = p.getAmountPaid() - p.getShare();
+                    if (payment < 0) {
+                        payment = Math.abs(payment);
+                        resolveText = resolveText + p.getMemberName() + " has to pay " + precision.format(payment) + "\n";
+                    } else {
+                        resolveText = resolveText + p.getMemberName() + " should get " + precision.format(payment) + "\n";
+                    }
+                }
+
+                Intent intent = new Intent(GroupHome.this, Resolve.class);
+                intent.putExtra("Resolve", resolveText);
+                startActivity(intent);
+
             }
 
             @Override

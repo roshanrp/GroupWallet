@@ -32,5 +32,5 @@
         android:layout_margin="30dp"
         android:clickable="true"
         android:onClick="addGroup"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/ic_group_add"/>
 </RelativeLayout>

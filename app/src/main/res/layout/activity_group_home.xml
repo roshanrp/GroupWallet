@@ -32,7 +32,7 @@
         android:layout_margin="30dp"
         android:clickable="true"
         android:onClick="addTransaction"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/ic_add"/>
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -42,7 +42,8 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:clickable="true"
-        android:onClick="resolve" />
+        android:onClick="resolve"
+        android:src="@drawable/ic_split"/>
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->

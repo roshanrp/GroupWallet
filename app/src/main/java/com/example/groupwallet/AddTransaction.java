@@ -79,9 +79,13 @@ public class AddTransaction extends AppCompatActivity {
                         Participant participant = snapshot.getValue(Participant.class);
                         Log.d(TAG, "onDataChange:Participant " + participant.getMemberName());
                         if (participant.getMemberName().equals(tPayer)) {
-                            snapshot.getRef().child("amountPaid").setValue(tAmount);
+                            double total = participant.getAmountPaid();
+                            total += tAmount;
+                            snapshot.getRef().child("amountPaid").setValue(total);
                         }
-                        snapshot.getRef().child("share").setValue(share);
+                        double totalShare = participant.getShare();
+                        totalShare += share;
+                        snapshot.getRef().child("share").setValue(totalShare);
                     }
                 }
 
