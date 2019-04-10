@@ -30,7 +30,7 @@ public class GroupHome extends AppCompatActivity {
     DatabaseReference databaseTransaction;
     List<Participant> membersList;
     Button resolve;
-    String gId;
+    String gId, gName;
     private static final String TAG = "GroupHome";
 
     @Override
@@ -39,6 +39,8 @@ public class GroupHome extends AppCompatActivity {
         setContentView(R.layout.activity_group_home);
 
         gId = getIntent().getStringExtra("GROUP_ID");
+        gName = getIntent().getStringExtra("GROUP_NAME");
+        getSupportActionBar().setTitle(gName);
 
         transactionList = new ArrayList<>();
         initRecyclerView();
@@ -167,6 +169,7 @@ public class GroupHome extends AppCompatActivity {
 
                 Intent intent = new Intent(GroupHome.this, Resolve.class);
                 intent.putExtra("Resolve", resolveText);
+                intent.putExtra("GROUP_NAME", gName);
                 startActivity(intent);
 
             }

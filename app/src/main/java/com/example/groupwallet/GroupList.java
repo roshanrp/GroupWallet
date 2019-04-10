@@ -1,6 +1,8 @@
 package com.example.groupwallet;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -50,6 +55,24 @@ public class GroupList extends RecyclerView.Adapter<GroupList.GroupViewHolder> {
                 intent.putExtra("GROUP_DESC", group.getGroupDesc());
 
                 context.startActivity(intent);
+            }
+        });
+
+        groupViewHolder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete group")
+                        .setMessage("Do you want to delete this group?")
+                        .setNegativeButton("No", null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("groups");
+                                databaseReference.child(group.getGroupId()).removeValue();
+                            }
+                        }).show();
+                return true;
             }
         });
     }

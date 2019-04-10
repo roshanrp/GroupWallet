@@ -13,6 +13,8 @@ public class Resolve extends AppCompatActivity {
         setContentView(R.layout.activity_resolve);
 
         String text = getIntent().getStringExtra("Resolve");
+        String gName = getIntent().getStringExtra("GROUP_NAME");
+        getSupportActionBar().setTitle(gName);
         textView = (TextView) findViewById(R.id.resolve);
         textView.setText(text);
     }
